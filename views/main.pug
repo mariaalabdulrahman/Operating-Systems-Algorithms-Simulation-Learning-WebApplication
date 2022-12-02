@@ -1,0 +1,287 @@
+head
+    meta(charset='UTF-8')
+    meta(http-equiv='X-UA-Compatible' content='IE=edge')
+    meta(name='viewport' content='width=device-width, initial-scale=1.0')
+
+    link(rel='stylesheet' type='text/css' href='/CSS/main.css')
+    link(rel='shortcut icon' type='image/png' href='/Images/logo.png')
+    link(rel='preconnect' href='https://fonts.googleapis.com')
+    link(rel='preconnect' href='https://fonts.gstatic.com' crossorigin='')
+    link(href='https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Arvo:ital,wght@0,400;0,700;1,400;1,700&family=Dela+Gothic+One&family=Secular+One&family=Yeseva+One&display=swap' rel='stylesheet')
+
+    script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js')
+    script(src='/JS/job.js')
+    script(src='/JS/heap.js')
+    script(src='/JS/pageReplacement.js')
+    script(src='/JS/bankers.js')
+
+    title OSLearn
+script.
+    let currAlgo = "js"
+    $(document).ready(function(){
+        $("#js").click(function(){
+            $(this).css("text-decoration","underline")
+            $("#pr").css("text-decoration","none")
+            $("#ba").css("text-decoration","none")
+            $("#jsi").show()
+            $("#pri").hide()
+            $("#bi").hide()
+            $("#qd").hide()
+
+            currAlgo="js"
+
+            $("#scrollableTextOutput").html("")
+            $("#scrollableDiagramOutput").html("")
+        })
+        $("#pr").click(function(){
+            $(this).css("text-decoration","underline")
+            $("#js").css("text-decoration","none")
+            $("#ba").css("text-decoration","none")
+            $("#jsi").hide()
+            $("#bi").hide()
+            $("#pri").show()
+
+            currAlgo="pr"
+
+            $("#scrollableTextOutput").html("")
+            $("#scrollableDiagramOutput").html("")
+        })
+        $("#ba").click(function(){
+            $(this).css("text-decoration","underline")
+            $("#pr").css("text-decoration","none")
+            $("#js").css("text-decoration","none")
+            $("#bi").show()
+            $("#jsi").hide()
+            $("#pri").hide()
+
+            currAlgo="ba"
+
+            $("#scrollableTextOutput").html("")
+            $("#scrollableDiagramOutput").html("")
+        })
+        $("#jss").on("change", function(){
+            if($("#jss").val()=="rr")$("#qd").show()
+            else $("#qd").hide()
+        })
+        $("#numProcesses").mouseup(function () {
+            for (let i = 1; i <=parseInt($(this).val()); i++)$("#p"+(i)+"d").show()
+            for (let i = parseInt($(this).val())+1; i <=10; i++)$("#p"+(i)+"d").hide()
+        });
+        $("#go").click(function(){
+            try{
+                if(currAlgo=="js"){
+                    let jsAlgo = $("#jss").val()
+                    if(jsAlgo=="fcfs")processTimesPrioritizedRun(1,true)
+                    if(jsAlgo=="sjfn")processTimesPrioritizedRun(0,true)
+                    if(jsAlgo=="sjfp")processTimesPrioritizedRun(1,false)
+                    if(jsAlgo=="rr")cpuTimesPrioritizedRun(parseInt($("#q").val()))
+                }
+                if(currAlgo=="pr"){
+                    let jsAlgo = $("#prs").val()
+                    if(jsAlgo=="fifo")fifo()
+                    if(jsAlgo=="lru")lru()
+                    if(jsAlgo=="optimal")optimal()
+                }
+                if(currAlgo=="ba")bankers()
+            }
+            catch(e){
+                alert("There was an error. Will reload page now")
+                location.reload();
+            }
+        })
+        $("#js").click()
+    })
+#main
+    #header
+        img(src='/Images/logo2.png' height='35px')
+        #links
+            a#js(href='#') Job Scheduler
+            a#pr(href='#') Page Replacement
+            a#ba(href='#') Banker&apos;s Algorithm
+    #body
+        #input
+            h1 Input
+            #inputBox
+                #jsi
+                    span Algorithm
+                    br
+                    select#jss
+                        option(value='fcfs') First Come First Serve
+                        option(value='sjfn') Shortest Job First Non-Preemptive
+                        option(value='sjfp') Shortest Job First Preemptive
+                        option(value='rr') Round Robin
+                    br
+                    br
+                    span Arrival Time
+                    br
+                    input#at(type='text' placeholder='Eg: 0 1 2 3')
+                    br
+                    br
+                    span Burst Time
+                    br
+                    input#bt(type='text' placeholder='Eg: 0 1 2 3')
+                    br
+                    br
+                    #qd
+                        span Time Quantum
+                        br
+                        input#q(type='number' min='1' max='10' onkeydown='return false' placeholder='Time Quantum' value='5')
+                        br
+                        br
+                #pri
+                    span Algorithm
+                    br
+                    select#prs
+                        option(value='fifo') FIFO
+                        option(value='lru') LRU
+                        option(value='optimal') Optimal
+                    br
+                    br
+                    span Number of Frames
+                    br
+                    input#numFrames(type='number' min='3' max='5' onkeydown='return false' placeholder='No. of frames' value='3')
+                    br
+                    br
+                    span Reference String
+                    br
+                    input#rs(type='text' placeholder='Eg: 0 1 2 3')
+                    br
+                    br
+                #bi
+                    span Number of Processes
+                    br
+                    input#numProcesses(type='number' min='1' max='10' onkeydown='return false' value='1' placeholder='No. of processes')
+                    br
+                    br
+                    span Available resources
+                    br
+                    input#av(type='text' placeholder='Eg: 0 1 2 3')
+                    br
+                    br
+                    #p1d
+                        span P1 allocated resources
+                        br
+                        input#P1ar(type='text' placeholder='Eg: 0 1 2 3')
+                        br
+                        br
+                        span P1 max resources needed
+                        br
+                        input#P1mr(type='text' placeholder='Eg: 0 1 2 3')
+                        br
+                        br
+                        br
+                    #p2d(style='display:none')
+                        span P2 allocated resources
+                        br
+                        input#P2ar(type='text' placeholder='Eg: 0 1 2 3')
+                        br
+                        br
+                        span P2 max resources needed
+                        br
+                        input#P2mr(type='text' placeholder='Eg: 0 1 2 3')
+                        br
+                        br
+                        br
+                    #p3d(style='display:none')
+                        span P3 allocated resources
+                        br
+                        input#P3ar(type='text' placeholder='Eg: 0 1 2 3')
+                        br
+                        br
+                        span P3 max resources needed
+                        br
+                        input#P3mr(type='text' placeholder='Eg: 0 1 2 3')
+                        br
+                        br
+                        br
+                    #p4d(style='display:none')
+                        span P4 allocated resources
+                        br
+                        input#P4ar(type='text' placeholder='Eg: 0 1 2 3')
+                        br
+                        br
+                        span P4 max resources needed
+                        br
+                        input#P4mr(type='text' placeholder='Eg: 0 1 2 3')
+                        br
+                        br
+                        br
+                    #p5d(style='display:none')
+                        span P5 allocated resources
+                        br
+                        input#P5ar(type='text' placeholder='Eg: 0 1 2 3')
+                        br
+                        br
+                        span P5 max resources needed
+                        br
+                        input#P5mr(type='text' placeholder='Eg: 0 1 2 3')
+                        br
+                        br
+                        br
+                    #p6d(style='display:none')
+                        span P6 allocated resources
+                        br
+                        input#P6ar(type='text' placeholder='Eg: 0 1 2 3')
+                        br
+                        br
+                        span P6 max resources needed
+                        br
+                        input#P6mr(type='text' placeholder='Eg: 0 1 2 3')
+                        br
+                        br
+                        br
+                    #p7d(style='display:none')
+                        span P7 allocated resources
+                        br
+                        input#P7ar(type='text' placeholder='Eg: 0 1 2 3')
+                        br
+                        br
+                        span P7 max resources needed
+                        br
+                        input#P7mr(type='text' placeholder='Eg: 0 1 2 3')
+                        br
+                        br
+                        br
+                    #p8d(style='display:none')
+                        span P8 allocated resources
+                        br
+                        input#P8ar(type='text' placeholder='Eg: 0 1 2 3')
+                        br
+                        br
+                        span P8 max resources needed
+                        br
+                        input#P8mr(type='text' placeholder='Eg: 0 1 2 3')
+                        br
+                        br
+                        br
+                    #p9d(style='display:none')
+                        span P9 allocated resources
+                        br
+                        input#P9ar(type='text' placeholder='Eg: 0 1 2 3')
+                        br
+                        br
+                        span P9 max resources needed
+                        br
+                        input#P9mr(type='text' placeholder='Eg: 0 1 2 3')
+                        br
+                        br
+                        br
+                    #p10d(style='display:none')
+                        span P10 allocated resources
+                        br
+                        input#P10ar(type='text' placeholder='Eg: 0 1 2 3')
+                        br
+                        br
+                        span P10 max resources needed
+                        br
+                        input#P10mr(type='text' placeholder='Eg: 0 1 2 3')
+                        br
+                        br
+                        br
+                button#go GO
+        #output
+            h1 Output
+            #scrollableDiagramOutput
+            #scrollableTextOutput
+    #footer
+        p GLM copyrighted &reg;, all rights reserved.

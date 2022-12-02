@@ -1,0 +1,160 @@
+body{
+    margin: 5px;
+    font-family: 'Arvo', serif;
+    user-select: none;
+    background-color: #f6f6f6;
+}
+#main{
+    width: 100%;
+    height: 97%;
+    margin: auto;
+}
+#header{
+    padding: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    border-bottom: 1px solid rgb(189, 184, 184);
+
+    display: flex;
+    justify-content: start;
+}
+#links{display: flex;}
+#links *{
+    color:gray;
+    text-decoration: none;
+    margin-top: auto;
+    margin-left: 20px;
+    
+}
+#links *:hover{color: black;}
+#body{
+    display: flex;
+    justify-content: space-around;
+
+    padding: 10px;
+}
+#input,#output{
+    height: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+}
+#input{
+    width: 33%;
+    height: 500px;
+    overflow-y: hidden;
+}
+#inputBox{
+    overflow-y: scroll;
+    height: 76%;
+    border-radius: 7px;
+    background-color: pink;
+    padding: 10px;
+}
+input[type=text], input[type=number], select{
+    padding: 10px;
+    font-size: 15px;
+    border: 1px solid lightgray;
+    width: 100%;
+    border-radius: 5px;
+}
+select{
+    background-color: white;
+}
+button{
+    padding: 10px;
+    width: 100%;
+    margin-top: 10px;
+    background-color: rgb(80, 124, 80);
+    color: white;
+    border-radius: 7px;
+    font-size: 17px;
+}
+
+#output{
+    width: 65%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+
+    border-left: 1px solid rgb(177, 173, 173);
+}
+#scrollableDiagramOutput, #scrollableTextOutput{
+    background-color: rgb(204, 230, 238);
+    width: 100%;
+    border-radius: 7px;
+    padding: 20px;
+    box-sizing: border-box;
+}
+#scrollableDiagramOutput{
+    overflow-x: scroll;
+    display: flex;
+    min-height: 125px;
+}
+#scrollableTextOutput{
+    margin-top: 10px;
+    height: 250px;
+    overflow-y: scroll;
+}
+.gantProcessBox, .gantTimeBox{
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+}
+.gantProcessBox{
+    min-width: 50px;
+    background-color: rgb(133, 224, 133);
+}
+.gantTimeBox{
+    min-width: 20px;
+    background-color: #ff704d;
+}
+.frameBox{
+    min-width: 30px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+.frameBox span{
+    min-width: 20px;
+    text-align: center;
+    border: 1px solid black;
+}
+.processBox{
+    background-color: rgb(133, 224, 133);
+    height: 50px;
+    min-width: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    margin-left: 10px;
+}
+
+#footer{
+    display: flex;
+    justify-content: center;
+    margin-top: 100px;
+    border-top: 1px solid rgb(177, 173, 173);
+    color: gray;
+}
+
+@media (max-width:900px){
+    #body{flex-direction: column;}
+    #input{
+        text-align: center;
+        width: 95%;
+        margin: auto;
+    }
+    #output{
+        text-align: center;
+        width: 95%;
+        border:none;
+        margin: auto;
+    }
+}
