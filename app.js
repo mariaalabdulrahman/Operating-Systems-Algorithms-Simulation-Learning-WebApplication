@@ -20,4 +20,8 @@ app.use(session({
 }));
 
 app.get('/',(req,res)=>{res.render("main")})
+app.get("/glm", (req, res)=>{
+    res.send("HELLO FROM GLM")
+})
+
 app.listen(process.env.PORT||8000);

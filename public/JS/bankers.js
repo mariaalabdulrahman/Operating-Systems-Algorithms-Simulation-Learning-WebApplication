@@ -8,11 +8,14 @@ function bankers(){
     let diagramRes = ""
     let sequence = []
 
+    let count = 0;
     while(true){
         let currAvailable = available[available.length-1]
         let foundNextProcess = false
         let breakFlag = false
         
+        count+=1
+        if(count==1000)break
         for (let i = 0; i < need.length; i++) {
             if(need[i]==undefined){
                 if(i==need.length-1){
@@ -46,7 +49,6 @@ function bankers(){
     $("#scrollableTextOutput").html(textRes)
     $("#scrollableDiagramOutput").html(diagramRes)
 }
-
 function checkIfAvailableMeetsNeeds(a1, a2){
     for (let i = 0; i < a1.length; i++) {
         if(a1[i]>a2[i])return false

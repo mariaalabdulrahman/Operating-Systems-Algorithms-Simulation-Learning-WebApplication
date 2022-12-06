@@ -74,7 +74,9 @@ function cpuTimesPrioritizedRun(q){
     let ganttChart = []
     let prevName = ""
 
+    let count=0
     while(true){
+        if(count++==10000)throw "nah fam"
         for (let i = 0; i < h.data.length; i++) {
             h.data[i].increaseTurnaroundTime(1)
         }

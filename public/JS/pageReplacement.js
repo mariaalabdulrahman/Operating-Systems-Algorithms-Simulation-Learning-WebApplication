@@ -9,6 +9,7 @@ function optimal(){
     let pageFaults = 0
 
     let res=""
+    for (let i = 0; i < frames.length; i++)frames[i]=undefined
     
     for (let i = 0; i < data.length; i++) {
         let page = data[i];
@@ -60,6 +61,7 @@ function lru(){
     let pageFaults = 0
 
     let res=""
+    for (let i = 0; i < frames.length; i++)frames[i]=undefined
 
     for (let i = 0; i < data.length; i++) {
         let page = data[i];
@@ -82,8 +84,8 @@ function lru(){
             visibility=""
             pageFaults++
         }
-        if(frames.includes(undefined))nextIndex = (nextIndex+1)%numFrames
-        if(!frames.includes(undefined) || nextIndex==0) {
+        if(frames.includes(undefined)&&!includes)nextIndex = (nextIndex+1)%numFrames
+        if(!frames.includes(undefined)) {
             let minDataIndex = Number.MAX_SAFE_INTEGER
             for (let j = 0; j < frames.length; j++) {
                 if(minDataIndex>frames[j].dataIndex)nextIndex = j
@@ -111,6 +113,8 @@ function fifo(){
     let pageFaults = 0
 
     let res=""
+    for (let i = 0; i < frames.length; i++)frames[i]=undefined
+    
     for (let i = 0; i < data.length; i++) {
         let page = data[i];
         res+= '<div class="frameBox">'
