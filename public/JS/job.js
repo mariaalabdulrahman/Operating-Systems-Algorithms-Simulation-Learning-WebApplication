@@ -106,7 +106,6 @@ function cpuTimesPrioritizedRun(q){
         }
 
         if(h.data.length != 0 && h.data[0].burstTime == 0){
-            console.log(1)
             finishedProcesses.push(h.data[0])
             h.pop()
             h.setResponseTime(t)

@@ -15,6 +15,7 @@ html
         script(src='/JS/heap.js')
         script(src='/JS/pageReplacement.js')
         script(src='/JS/bankers.js')
+        script(src='/JS/diskScheduling.js')
 
         title OSLearn
     script.
@@ -22,12 +23,9 @@ html
         $(document).ready(function(){
             $("#js").click(function(){
                 $(this).css("text-decoration","underline")
-                $("#pr").css("text-decoration","none")
-                $("#ba").css("text-decoration","none")
-                $("#jsi").show()
-                $("#pri").hide()
-                $("#bi").hide()
-                $("#qd").hide()
+                $("#pr,#ba,#ds").css("text-decoration","none")
+                $("#pri,#dsi,#bi,#qd,#canvas").hide()
+                $("#jsi, #scrollableDiagramOutput").show()
 
                 currAlgo="js"
 
@@ -36,11 +34,9 @@ html
             })
             $("#pr").click(function(){
                 $(this).css("text-decoration","underline")
-                $("#js").css("text-decoration","none")
-                $("#ba").css("text-decoration","none")
-                $("#jsi").hide()
-                $("#bi").hide()
-                $("#pri").show()
+                $("#js,#ds,#ba").css("text-decoration","none")
+                $("#jsi, #bi, #dsi, #canvas").hide()
+                $("#pri, #scrollableDiagramOutput").show()
 
                 currAlgo="pr"
 
@@ -49,14 +45,23 @@ html
             })
             $("#ba").click(function(){
                 $(this).css("text-decoration","underline")
-                $("#pr").css("text-decoration","none")
-                $("#js").css("text-decoration","none")
-                $("#bi").show()
-                $("#jsi").hide()
-                $("#pri").hide()
+                $("#pr,#js,#ds").css("text-decoration","none")
+                $("#pri, #jsi, #dsi, #canvas").hide()
+                $("#bi, #scrollableDiagramOutput").show()
 
                 currAlgo="ba"
 
+                $("#scrollableTextOutput").html("")
+                $("#scrollableDiagramOutput").html("")
+            })
+            $("#ds").click(function(){
+                $(this).css("text-decoration","underline")
+                $("#pr,#js,#ba").css("text-decoration","none")
+                $("#pri, #jsi, #bi, #scrollableDiagramOutput").hide()
+                $("#dsi, #canvas").show()
+                doCanvas(300,[])
+
+                currAlgo="ds"
                 $("#scrollableTextOutput").html("")
                 $("#scrollableDiagramOutput").html("")
             })
@@ -84,6 +89,7 @@ html
                         if(jsAlgo=="optimal")optimal()
                     }
                     if(currAlgo=="ba")bankers()
+                    if(currAlgo=="ds")diskScheduling()
                 }
                 catch(e){
                     alert("There was an error. Will reload page now")
@@ -96,9 +102,10 @@ html
         #header
             img(src='/Images/logo2.png' height='35px')
             #links
-                a#js(href='#') Job Scheduler
+                a#js(href='#') CPU Scheduling
                 a#pr(href='#') Page Replacement
                 a#ba(href='#') Banker&apos;s Algorithm
+                a#ds(href='#') Disk Scheduling
         #body
             #input
                 h1 Input
@@ -279,10 +286,36 @@ html
                             br
                             br
                             br
+                    #dsi
+                        span Algorithm
+                        br
+                        select#dss
+                            option(value='fcfs') First Come First Serve
+                            option(value='sstf') Shortest Seek Time First
+                            option(value='scan') Scan
+                            option(value='cscan') C-Scan
+                            option(value='clook') C-Look
+                        br
+                        br
+                        span Request Queue Limit
+                        br
+                        input#dsn(type='number' placeholder='Max : 300' min="50", max="300" value="300")
+                        br
+                        br
+                        span Request Queue
+                        br
+                        input#dsq(type='text' placeholder='Eg: 0 1 2 3')
+                        br
+                        br
+                        span Head Pointer
+                        br
+                        input#dsh(type='text' min="0", max="300" value="53")
                     button#go GO
             #output
                 h1 Output
                 #scrollableDiagramOutput
+                #canvas(style="height:300px;overflow:scroll")
+                    canvas#cvs(width="3100px" height="2000px" style="background-color:rgb(204, 230, 238)")
                 #scrollableTextOutput
         #footer
             p GLM copyrighted &reg;, all rights reserved.

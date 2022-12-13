@@ -10,20 +10,14 @@ function bankers(){
 
     let count = 0;
     while(true){
-        let currAvailable = available[available.length-1]
         let foundNextProcess = false
-        let breakFlag = false
+        let breakFlag = true
         
         count+=1
         if(count==1000)break
         for (let i = 0; i < need.length; i++) {
-            if(need[i]==undefined){
-                if(i==need.length-1){
-                    breakFlag=true
-                    foundNextProcess=true
-                }
-                continue
-            }
+            let currAvailable = available[available.length-1]
+            if(need[i]==undefined)continue
             if(checkIfAvailableMeetsNeeds(need[i],currAvailable)){
                 foundNextProcess = true
                 diagramRes+="<div class='processBox'><span>P"+(i+1)+"</span></div>"
@@ -34,18 +28,19 @@ function bankers(){
 
                 need[i]= undefined
                 available.push(nextAvailable)
-                break
             }
         }
-
+        for (let i = 0; i < need.length; i++) {
+            if(need[i]==undefined)continue
+            breakFlag=false
+        }
+        if(breakFlag)break
         if(!foundNextProcess){
             textRes = "<p>Safe sequence does not exist. System is in unsafe state</p>"
             diagramRes = ""
             break
         }
-        if(breakFlag)break
     }
-    
     $("#scrollableTextOutput").html(textRes)
     $("#scrollableDiagramOutput").html(diagramRes)
 }
@@ -59,22 +54,23 @@ function checkIfAvailableMeetsNeeds(a1, a2){
 
 function getInputForBankers(){
     // let allocations = [
-    //     [0,0,1,2],
-    //     [1,0,0,0],
-    //     [1,3,5,4],
-    //     [0,6,3,2],
-    //     [0,0,1,4],
+    //     [0,1,0],
+    //     [2,0,0],
+    //     [3,0,2],
+    //     [2,1,1],
+    //     [0,0,2],
     // ]
     // let max = [
-    //     [0,0,1,2],
-    //     [1,7,5,0],
-    //     [2,3,5,6],
-    //     [0,6,5,2],
-    //     [0,6,5,6],
+    //     [7,5,3],
+    //     [3,2,2],
+    //     [9,0,2],
+    //     [2,2,2],
+    //     [4,3,3],
     // ]
-    // let available = [[1,5,2,0]]
+    // let available = [[3,3,2]]
 
-    let allocations = [], max = [], available = [], need = []
+    let allocations = [], max = [], available = []
+    let need = []
     let numP = parseInt($("#numProcesses").val())
 
     available.push($("#av").val().split(" ").map(function(item){return parseInt(item);}))
@@ -86,7 +82,7 @@ function getInputForBankers(){
     for (let i = 0; i < allocations.length; i++) {
         let temp = []
         for (let j = 0; j < allocations[0].length; j++)temp.push(max[i][j] - allocations[i][j])
-        need.push(temp)        
+        need.push(temp)
     }
     
     return [allocations, need, available]

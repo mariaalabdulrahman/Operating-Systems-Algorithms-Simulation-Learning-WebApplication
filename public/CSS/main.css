@@ -24,7 +24,6 @@ body{
     text-decoration: none;
     margin-top: auto;
     margin-left: 20px;
-    
 }
 #links *:hover{color: black;}
 #body{
@@ -69,7 +68,6 @@ button{
     border-radius: 7px;
     font-size: 17px;
 }
-
 #output{
     width: 65%;
     display: flex;
@@ -135,7 +133,6 @@ button{
     padding: 10px;
     margin-left: 10px;
 }
-
 #footer{
     display: flex;
     justify-content: center;
@@ -143,8 +140,14 @@ button{
     border-top: 1px solid rgb(177, 173, 173);
     color: gray;
 }
-
 @media (max-width:900px){
+    #header{flex-direction: column;}
+    #header img{
+        width: 180px;
+        margin: auto;
+    }
+    #links{justify-content: space-evenly;}
+    #links *{margin-top: 10px;}
     #body{flex-direction: column;}
     #input{
         text-align: center;
@@ -158,3 +161,4 @@ button{
         margin: auto;
     }
 }
+@media (max-width:470px){#links *{font-size: 11px;}}
