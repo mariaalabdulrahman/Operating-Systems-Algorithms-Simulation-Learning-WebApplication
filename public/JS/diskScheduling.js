@@ -195,9 +195,11 @@ function doCanvas(qLimit, pointPairs){
     context.strokeStyle = context.fillStyle = "black";
     context.font = "10px Georgia";
     for (let i = 0; i <=qLimit; i++) {
+        let yEnd = i==qLimit?canvas.height:40
+
         context.beginPath()
         context.moveTo(i*unitDistance, 0)
-        context.lineTo(i*unitDistance, 40)
+        context.lineTo(i*unitDistance, yEnd)
         context.stroke()
         
         if(i%10==0)context.fillText(i, i*10, 60);
