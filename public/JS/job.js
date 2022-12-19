@@ -103,6 +103,7 @@ function cpuTimesPrioritizedRun(q){
                 finishedProcesses.push(h.data[h.data.length-1])
                 h.removeLeaf()
             }
+            h.setResponseTime(t)
         }
 
         if(h.data.length != 0 && h.data[0].burstTime == 0){

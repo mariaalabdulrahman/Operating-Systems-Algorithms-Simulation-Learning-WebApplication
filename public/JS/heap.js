@@ -117,7 +117,7 @@ class ProcessQueue{
     setResponseTime(t){
         if(this.data.length==0)return
         this.data[0].runningCounter++;
-        if(this.data[0].runningCounter==1)this.data[0].responseTime = t = this.data[0].arrivalTime
+        if(this.data[0].runningCounter==1)this.data[0].responseTime = t - this.data[0].arrivalTime
     }
 }
 

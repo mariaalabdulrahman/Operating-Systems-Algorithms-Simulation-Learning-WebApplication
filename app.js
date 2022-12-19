@@ -24,4 +24,4 @@ app.get("/glm", (req, res)=>{
     res.send("HELLO FROM GLM")
 })
 
-app.listen(process.env.PORT||8000);
+app.listen(8000);
